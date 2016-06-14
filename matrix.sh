@@ -18,18 +18,24 @@
 ROWS=(26 24 22 18 16 12 10 8)
 COLS=(13 15 19 21 23)
 
-DELAY=0.5
+DELAY=0.01
 
 function turn_on {
     echo "Turning on led in col=$1 and row=$2"
-    `gpio -1 write $COLS[$1] 0`
-    `gpio -1 write $ROWS[$2] 1`
+    `gpio -1 write ${COLS[$1]} 0`
+    `gpio -1 write ${ROWS[$2]} 1`
 }
 
 function turn_off {
     echo "Turning off led in col=$1 and row=$2"
-    `gpio -1 write $COLS[$1] 1`
-    `gpio -1 write $ROWS[$2] 0`
+    `gpio -1 write ${COLS[$1]} 1`
+    `gpio -1 write ${ROWS[$2]} 0`
+}
+
+function toggle {
+    turn_on $1 $2
+    sleep $DELAY
+    turn_off $1 $2
 }
 
 function resett {
@@ -62,6 +68,17 @@ function clearr {
 resett
 clearr
 
-turn_on 1 1
-sleep $DELAY
-#turn_off 1 1
+i=0
+while [ true ]
+do
+#    toggle $i 0
+#    i=$(( $i==4 ? 0 : $i+1 ))
+
+    col=$(($RANDOM % 5))
+    row=$(($RANDOM % 8))
+    toggle $col $row
+
+done
+
+
+
