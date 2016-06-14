@@ -32,22 +32,36 @@ function turn_off {
     `gpio -1 write $ROWS[$2] 0`
 }
 
-function reset {
+function resett {
     for i in "${ROWS[@]}"
     do
-        echo "Resetting pin $i"
+        echo "Setting mode for pin $i"
 	`gpio -1 mode $i out`
+    done
+
+    for i in "${COLS[@]}"
+    do
+        echo "Setting mode for pin $i"
+	`gpio -1 mode $i out`
+    done
+}
+
+function clearr {
+    for i in "${ROWS[@]}"
+    do
 	`gpio -1 write $i 0`
     done
 
     for i in "${COLS[@]}"
     do
-        echo "Resetting pin $i"
-        `gpio -1 mode $i out`
-        `gpio -1 write $i 1`
+	`gpio -1 write $i 1`
     done
 }
 
-reset
+
+resett
+clearr
 
 turn_on 1 1
+sleep $DELAY
+#turn_off 1 1
