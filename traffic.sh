@@ -20,9 +20,9 @@ function colors {
 
 echo "Start Traffic"
 
-output $RED
-output $YELLOW
-output $GREEN
+output ${LIGHTS[0]}
+output ${LIGHTS[1]}
+output ${LIGHTS[2]}
 
 colors 0 0 0
 
