@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LED=17
+LED=$1
 LED_TIME=0.5
 
 function colors {
