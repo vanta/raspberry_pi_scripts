@@ -1,8 +1,8 @@
 #!/bin/bash
 
-GREEN=9
-RED=10
-YELLOW=11
+# RED YELLOW GREEN
+LIGHTS=(10 11 9)
+LIGHTS_TIMES=(5 1 5)
 
 GREEN_TIME=5
 YELLOW_TIME=1
@@ -13,16 +13,13 @@ function output {
 }
 
 function colors {
-  gpio -g write $RED $1
-  gpio -g write $YELLOW $2
-  gpio -g write $GREEN $3
+  gpio -g write ${LIGHTS[0]} $1
+  gpio -g write ${LIGHTS[1]} $2
+  gpio -g write ${LIGHTS[2]} $3
 }
 
 echo "Start Traffic"
 
-# gpio -g mode $RED output
-# gpio -g mode $YELLOW output
-# gpio -g mode $GREEN output
 output $RED
 output $YELLOW
 output $GREEN
