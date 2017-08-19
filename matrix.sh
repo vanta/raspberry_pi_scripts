@@ -21,13 +21,13 @@ COLS=(13 15 19 21 23)
 DELAY=0.01
 
 function turn_on {
-    echo "Turning on led in col=$1 and row=$2"
+    echo -e  "\rTurning \e[91mon\e[0m led in col=$1 and row=$2"
     `gpio -1 write ${COLS[$1]} 0`
     `gpio -1 write ${ROWS[$2]} 1`
 }
 
 function turn_off {
-    echo "Turning off led in col=$1 and row=$2"
+    echo -e  "\rTurning \e[90moff\e[0m led in col=$1 and row=$2"
     `gpio -1 write ${COLS[$1]} 1`
     `gpio -1 write ${ROWS[$2]} 0`
 }
@@ -53,32 +53,87 @@ function resett {
 }
 
 function clearr {
-    for i in "${ROWS[@]}"
+    for z in "${ROWS[@]}"
     do
-	`gpio -1 write $i 0`
+	`gpio -1 write $z 0`
     done
 
-    for i in "${COLS[@]}"
+    for z in "${COLS[@]}"
     do
-	`gpio -1 write $i 1`
+	`gpio -1 write $z 1`
     done
 }
-
 
 resett
 clearr
 
 i=0
+row=0
+col=0
+addCol=1
+addRow=0
+
 while [ true ]
 do
 #    toggle $i 0
 #    i=$(( $i==4 ? 0 : $i+1 ))
 
-    col=$(($RANDOM % 5))
-    row=$(($RANDOM % 8))
-    toggle $col $row
+
+#round
+
+    toggle  $col $row
+
+    if [[ $col -eq 4 && $row -eq 0 ]]
+    then
+	addCol=0
+	addRow=1
+    fi
+
+    if [[ $col -eq 4 && $row -eq 7 ]]
+    then
+	addCol=-1
+	addRow=0
+    fi
+
+    if [[ $col -eq 0 && $row -eq 7 ]]
+    then
+	addCol=0
+	addRow=-1
+    fi
+
+    if [[ $col -eq 0 && $row -eq 0 ]]
+    then
+	addCol=1
+	addRow=0
+    fi
+
+    col=$(($col+$addCol))
+    row=$(($row+$addRow))
+
+    
+
+# random
+#    col=$(($RANDOM % 5))
+#    row=$(($RANDOM % 8))
+#    toggle $col $row
+
+#    clearr
+
+#    turn_on $i 0
+#    turn_on $i 1
+#    turn_on $i 2
+#    turn_on $i 3
+#    turn_on $i 4
+#    turn_on $i 5
+#    turn_on $i 6
+#    turn_on $i 7
+
+#    sleep $DELAY
+
+#    i=$(( $i==4 ? 0 : $i+1 ))
+
+    # sleep $DELAY
 
 done
-
 
 
