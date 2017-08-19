@@ -8,8 +8,8 @@ GREEN_TIME=5
 YELLOW_TIME=1
 RED_TIME=5
 
-function output(no) {
-  gpio -g mode $no output
+function output {
+  gpio -g mode $1 output
 }
 
 function colors {
@@ -23,9 +23,9 @@ echo "Start Traffic"
 # gpio -g mode $RED output
 # gpio -g mode $YELLOW output
 # gpio -g mode $GREEN output
-output($RED)
-output($YELLOW)
-output($GREEN)
+output $RED
+output $YELLOW
+output $GREEN
 
 colors 0 0 0
 
